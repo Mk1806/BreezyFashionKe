@@ -1,40 +1,21 @@
 <?php
-$email_address = $_POST['email_address'];
-$feedback = $_POST['feedback'];
+if(isset($_POST['submit'])){
+	$to = "motivationbymakanda@gmail.com"; // Your email address
+	$name = $_POST['name'];
+	$from = $_POST['email'];
+	$phone = $_POST['mobile'];
+	$message = $_POST['message'];
+	$subject = "Contact Form Details";
+	$headers = "From:" . $from;
+	$result = mail($to,$subject,$message,$headers);
 
-function filter_email_header($form_field) {  
-return preg_replace('/[nr|!/<>^$%*&]+/','',$form_field);
-}
+	if ($result) {
+		echo '<script type="text/javascript">alert("Your Message was sent Successfully!");</script>';
+		echo '<script type="text/javascript">window.location.href = window.location.href;</script>';
 
-$email_address  = filter_email_header($email_address);
-
-$headers = "From: $email_addressn";
-$sent = mail('milkamakanda03@gmail.com', 'Feedback Form Submission', $feedback, $headers);
-
-if ($sent) {
-
-?><html>
-<head>
-<title>Thank You</title>
-</head>
-<body>
-<h1>Thank You</h1>
-<p>Thank you for your feedback.</p>
-</body>
-</html>
-
-<?php
-
-} else {
-?><html>
-<head>
-<title>Something went wrong</title>
-</head>
-<body>
-<h1>Something went wrong</h1>
-<p>We could not send your feedback. Please try again.</p>
-</body>
-</html>
-<?php
+	}else{
+		echo '<script type="text/javascript">alert("Sorry! Message was not sent, Try again Later.");</script>';
+		echo '<script type="text/javascript">window.location.href = window.location.href;</script>';
+	}
 }
 ?>
